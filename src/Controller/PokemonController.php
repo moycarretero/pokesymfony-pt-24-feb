@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Debilidad;
 use App\Entity\Pokemon;
+use App\Form\PokemonType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class PokemonController extends AbstractController{
     #[Route('/pokemon/{id}', name: 'showPokemon')] 
@@ -74,4 +77,23 @@ class PokemonController extends AbstractController{
 
         return new Response('Pokemons insertados correctamente');
     }
+
+    #[Route('/insert/pokemon', name:'InsertPokemon')]
+    public function InsertPokemons (EntityManagerInterface $doctrine, Request $request){
+        
+        $form = $this -> createForm(PokemonType::class);
+        $form -> handleRequest($request);
+        
+        if($form-> isSubmitted() && $form -> isValid()){
+            $pokemon = $form -> getData();
+            $doctrine -> persist($pokemon);
+            $doctrine -> flush();
+        }
+
+
+        return $this->render('pokemons/newPokemon.html.twig', [ 'pokemonForm' => $form ]);
+
+
+    } 
+
 };
