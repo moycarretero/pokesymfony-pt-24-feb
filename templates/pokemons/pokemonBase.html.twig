@@ -22,6 +22,8 @@
                 </div>
             </nav>
             
+            <h3>¡Bienvenid@  {{ app.user.name | default('entrenador') }}!</h3>
+
             {% block contenido %} 
             
             {% endblock %}
