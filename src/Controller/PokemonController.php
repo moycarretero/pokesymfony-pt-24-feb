@@ -96,11 +96,7 @@ class PokemonController extends AbstractController{
             return $this->redirectToRoute('listPokemons');
 
         }
-
-
         return $this->render('pokemons/newPokemon.html.twig', [ 'pokemonForm' => $form ]);
-
-
     } 
 
 };
