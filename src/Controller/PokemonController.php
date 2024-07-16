@@ -88,6 +88,13 @@ class PokemonController extends AbstractController{
             $pokemon = $form -> getData();
             $doctrine -> persist($pokemon);
             $doctrine -> flush();
+
+            $this->addFlash('exito', 'Pokemon insertado correctamente');
+
+            //$form = $this -> createForm(PokemonType::class);
+
+            return $this->redirectToRoute('listPokemons');
+
         }
 
 
